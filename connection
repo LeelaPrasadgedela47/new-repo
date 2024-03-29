@@ -1,0 +1,21 @@
+const express= require("express");
+const mongoose=require("mongoose");
+const { model } = require("mongoose");
+const app=express();
+mongoose.connect("mongodb://localhost:27017/mydb");
+const schema= new mongoose.Schema({
+    name:String,
+    age:Number,
+    email:String
+});
+const Model=new model("model1",schema);
+app.get("/",(req,res)=>{
+    Model.find({}).then(function(user){
+        res.json(user)
+    }).catch(function(err){
+        console.log(err)
+    });
+})
+app.listen(3000,()=>{
+    console.log("server is running");
+})
